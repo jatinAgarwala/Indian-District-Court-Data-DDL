@@ -35,9 +35,15 @@ for guilty in [False, True]:
                 return out
 
         if dc == DataDispFem:
-            model = NeuralNet(13, 128, 52).to(DEVICE)
+            if guilty:
+                model = NeuralNet(13, 128, 2).to(DEVICE)    
+            else:
+                model = NeuralNet(13, 128, 52).to(DEVICE)
         else:
-            model = NeuralNet(9, 128, 52).to(DEVICE)
+            if guilty:
+                model = NeuralNet(9, 128, 2).to(DEVICE)
+            else:
+                model = NeuralNet(9, 128, 52).to(DEVICE)
             
         criterion = nn.CrossEntropyLoss()
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
