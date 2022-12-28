@@ -83,7 +83,7 @@ for guilty in [False, True]:
                 else:
                     torch.save(model.state_dict(), "model_no_fem.pth")
 
-        test_dataloader = DataLoader(DataDispFem(test), batch_size=128)
+        test_dataloader = DataLoader(dc(test), batch_size=128)
 
         correct = 0
         total = 0
