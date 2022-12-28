@@ -23,6 +23,8 @@ csv_path = '../../csv/'
 YEAR = '2010'
 cases_path = csv_path + 'cases/cases/cases_' + YEAR + '.csv'
 
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 START = date(1990, 1, 1)
 def numdays(date):
     td = date - START
@@ -94,7 +96,7 @@ class DataDispFem(Dataset):
         self.len = len(self.outputs)
     
     def __getitem__(self, index):
-        return (torch.tensor(self.inputs[index]), torch.tensor(self.outputs[index]))
+        return (torch.tensor(self.inputs[index]).to(DEVICE), torch.tensor(self.outputs[index]).to(DEVICE))
 
     def __len__(self):
         return self.len
@@ -114,12 +116,12 @@ class DataDispNoFem(Dataset):
         self.len = len(self.outputs)
     
     def __getitem__(self, index):
-        return (torch.tensor(self.inputs[index]), torch.tensor(self.outputs[index]))
+        return (torch.tensor(self.inputs[index]).to(DEVICE), torch.tensor(self.outputs[index]).to(DEVICE))
 
     def __len__(self):
         return self.len
 
-train, valid, test = PreProcessing(cases_path)
+train, valid, test = PreProcessing(cases_path))
 
 print(f"Input size: {INPUT_SIZE}")
 print(f"Output size: {OUTPUT_SIZE}")
