@@ -1,0 +1,7 @@
+Input size: 13
+Output size: 51
+Epoch [1/2], Loss: 2.9538, Accuracy: 18.93%
+Epoch [2/2], Loss: 2.8343, Accuracy: 19.55%
+Test Accuracy: 19.61%
+Epoch [1/2], Loss: 2.7930, Accuracy: 19.22%
+Epoch [2/2], Loss: 2.8110, Accuracy: 19.74%

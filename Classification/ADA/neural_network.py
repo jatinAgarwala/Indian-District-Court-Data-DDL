@@ -1,12 +1,16 @@
 import torch
 import torch.nn as nn
+import numpy as np
 
 from tqdm import tqdm
 
 from torch.utils.data import DataLoader
 from data import PreProcessing, DataDispFem, DataDispNoFem
 
+from sklearn.metrics import classification_report
+
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+BATCH_SIZE = 512
 
 dataset_classes = [DataDispFem, DataDispNoFem]
 
@@ -14,8 +18,8 @@ for guilty in [False, True]:
     train, valid, test = PreProcessing('cases_2010.csv', guilty)
     dc_i = 0
     for dc in dataset_classes:
-        train_dataloader = DataLoader(dc(train), batch_size=128)
-        valid_dataloader = DataLoader(dc(valid), batch_size=128)
+        train_dataloader = DataLoader(dc(train), batch_size=BATCH_SIZE)
+        valid_dataloader = DataLoader(dc(valid), batch_size=BATCH_SIZE)
 
         class NeuralNet(nn.Module):
             def __init__(self, input_size, hidden_size, num_classes):
@@ -83,15 +87,24 @@ for guilty in [False, True]:
                 else:
                     torch.save(model.state_dict(), "model_no_fem.pth")
 
-        test_dataloader = DataLoader(dc(test), batch_size=128)
+        test_dataloader = DataLoader(dc(test), batch_size=BATCH_SIZE)
 
         correct = 0
         total = 0
+        predicted_total = np.array([], dtype=np.int64)
+        batch_total = np.array([], dtype=np.int64)
         with torch.no_grad():
             for batch in tqdm(test_dataloader, desc="Testing"):
                 outputs = model(batch[0])
                 _, predicted = torch.max(outputs.data, 1)
                 total += batch[1].size(0)
                 correct += (predicted == batch[1]).sum().item()
+                pred_cpu = predicted.to('cpu')
+                batch_cpu = batch[1].to('cpu')
+
+                predicted_total = np.concatenate([predicted_total,np.array(pred_cpu)])
+                batch_total = np.concatenate([batch_total,np.array(batch_cpu)])
 
         print('Test Accuracy: {:.2f}%'.format(100*correct/total))
+        print(classification_report(batch_total, predicted_total))
+        dc_i += 1

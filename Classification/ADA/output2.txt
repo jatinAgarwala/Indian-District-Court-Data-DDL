@@ -1,0 +1,19 @@
+Input size: 13
+Output size: 51
+Epoch [1/10], Loss: 2.8754, Accuracy: 19.48%
+Epoch [2/10], Loss: 2.7940, Accuracy: 19.53%
+Epoch [3/10], Loss: 2.8225, Accuracy: 19.80%
+Epoch [4/10], Loss: 2.9584, Accuracy: 15.11%
+Test Accuracy: 15.20%
+Epoch [1/10], Loss: 2.9495, Accuracy: 18.25%
+Epoch [2/10], Loss: 2.8394, Accuracy: 19.12%
+Epoch [3/10], Loss: 2.9583, Accuracy: 15.11%
+Test Accuracy: 15.20%
+Epoch [1/10], Loss: 0.4097, Accuracy: 50.31%
+Epoch [2/10], Loss: 0.2377, Accuracy: 92.86%
+Epoch [3/10], Loss: 0.2377, Accuracy: 92.86%
+Test Accuracy: 92.84%
+Epoch [1/10], Loss: 0.3370, Accuracy: 92.21%
+Epoch [2/10], Loss: 0.2377, Accuracy: 92.87%
+Epoch [3/10], Loss: 0.2377, Accuracy: 92.87%
+Test Accuracy: 92.84%
